@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css')}}">
+    <title>Student Dropout Prediction</title>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <span>📚 Dropout Predictor</span>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="/" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a href="/about" class="nav-link">About Us</a>
+                </li>
+                <li class="nav-item">
+                    <a href="/explore" class="nav-link">Explore</a>
+                </li>
+                <li class="nav-item">
+                    <a href="/blog" class="nav-link">Blog</a>
+                </li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <div class="hero-section">
+        <div class="hero-content">
+            <h1 class="hero-title">Student Dropout Prediction</h1>
+            <p class="hero-subtitle">Leverage AI to identify students at risk and improve retention rates</p>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="form-section">
+            <div class="form-container">
+                <div class="form-header">
+                    <h2>Prediction Form</h2>
+                    <p>Fill in the details below to get a dropout risk assessment</p>
+                </div>
+                
+                <form action="{{ url_for('predict') }}" class="prediction-form" name="form" method="GET">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="marital_status">Marital Status</label>
+                            <select name="marital_status" id="marital_status" required>
+                                <option value="" disabled selected>Please select</option>
+                                <option value="1">Single</option>
+                                <option value="2">Married</option>
+                                <option value="3">Widower</option>
+                                <option value="4">Divorced</option>
+                                <option value="5">Facto Union</option>
+                                <option value="6">Legally Separated</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="application_mode">Application Mode</label>
+                            <select name="application_mode" id="application_mode" required>
+                                <option value="" disabled selected>Please select</option>
+                                <option value="1">1st phase—general contingent</option>
+                                <option value="2">Ordinance No. 612/93</option>
+                                <option value="3">1st phase—special contingent (Azores Island)</option>
+                                <option value="4">Holders of other higher courses</option>
+                                <option value="5">Ordinance No. 854-B/99</option>
+                                <option value="6">International student (bachelor)</option>
+                                <option value="7">1st phase—special contingent (Madeira Island)</option>
+                                <option value="8">2nd phase—general contingent</option>
+                                <option value="9">3rd phase—general contingent</option>
+                                <option value="10">Ordinance No. 533-A/99, item b2) (Different Plan)</option>
+                                <option value="11">Ordinance No. 533-A/99, item b3 (Other Institution)</option>
+                                <option value="12">Over 23 years old</option>
+                                <option value="13">Transfer</option>
+                                <option value="14">Change in course</option>
+                                <option value="15">Technological specialization diploma holders</option>
+                                <option value="16">Change in institution/course</option>
+                                <option value="17">Short cycle diploma holders</option>
+                                <option value="18">Change in institution/course (International)</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="application_order">Application Order</label>
+                            <select name="application_order" id="application_order" required>
+                                <option value="" disabled selected>Please select</option>
+                                <option value="1">First</option>
+                                <option value="2">Second</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="course">Course</label>
+                            <select name="course" id="course" required>
+                                <option value="" disabled selected>Please select</option>
+                                <option value="1">Biofuel Production Technologies</option>
+                                <option value="2">Animation and Multimedia Design</option>
+                                <option value="3">Social Service (evening attendance)</option>
+                                <option value="4">Agronomy</option>
+                                <option value="5">Communication Design</option>
+                                <option value="6">Veterinary Nursing</option>
+                                <option value="7">Informatics Engineering</option>
+                                <option value="8">Equiniculture</option>
+                                <option value="9">Management</option>
+                                <option value="10">Social Service</option>
+                                <option value="11">Tourism</option>
+                                <option value="12">Nursing</option>
+                                <option value="13">Oral Hygiene</option>
+                                <option value="14">Advertising and Marketing Management</option>
+                                <option value="15">Journalism and Communication</option>
+                                <option value="16">Basic Education</option>
+                                <option value="17">Management (evening attendance)</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="attendance">Daytime/Evening Attendance</label>
+                            <select name="attendance" id="attendance" required>
+                                <option value="" disabled selected>Please select</option>
+                                <option value="1">Daytime</option>
+                                <option value="0">Evening</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="previous_qualification">Previous Qualification</label>
+                            <select name="previous_qualification" id="previous_qualification" required>
+                                <option value="" disabled selected>Please select</option>
+                                <option value="1">Secondary education</option>
+                                <option value="2">Higher education—bachelor's degree</option>
+                                <option value="3">Higher education—degree</option>
+                                <option value="4">Higher education—master's degree</option>
+                                <option value="5">Higher education—doctorate</option>
+                                <option value="6">Frequency of higher education</option>
+                                <option value="7">12th year of schooling—not completed</option>
+                                <option value="8">11th year of schooling—not completed</option>
+                                <option value="9">Other—11th year of schooling</option>
+                                <option value="10">10th year of schooling</option>
+                                <option value="11">10th year of schooling—not completed</option>
+                                <option value="12">Basic education 3rd cycle (9th/10th/11th year) or equivalent</option>
+                                <option value="13">Basic education 2nd cycle (6th/7th/8th year) or equivalent</option>
+                                <option value="14">Technological specialization course</option>
+                                <option value="15">Higher education—degree (1st cycle)</option>
+                                <option value="16">Professional higher technical course</option>
+                                <option value="17">Higher education—master's degree (2nd cycle)</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="mother_qualification">Mother's Qualification</label>
+                            <select name="mother_qualification" id="mother_qualification" required>
+                                <option value="" disabled selected>Please select</option>
+                                <option value="1">Secondary Education—12th Year of Schooling or Equivalent</option>
+                                <option value="2">Higher Education—bachelor's degree</option>
+                                <option value="3">Higher Education—degree</option>
+                                <option value="4">Higher Education—master's degree</option>
+                                <option value="5">Higher Education—doctorate</option>
+                                <option value="6">Frequency of Higher Education</option>
+                                <option value="7">12th Year of Schooling—not completed</option>
+                                <option value="8">11th Year of Schooling—not completed</option>
+                                <option value="9">7th Year (Old)</option>
+                                <option value="10">Other—11th Year of Schooling</option>
+                                <option value="11">2nd year complementary high school course</option>
+                                <option value="12">10th Year of Schooling</option>
+                                <option value="13">General commerce course</option>
+                                <option value="14">Basic Education 3rd Cycle (9th/10th/11th Year) or Equivalent</option>
+                                <option value="15">Complementary High School Course</option>
+                                <option value="16">Technical-professional course</option>
+                                <option value="17">Complementary High School Course—not concluded</option>
+                                <option value="18">7th year of schooling</option>
+                                <option value="19">2nd cycle of the general high school course</option>
+                                <option value="20">9th Year of Schooling—not completed</option>
+                                <option value="21">8th year of schooling</option>
+                                <option value="22">General Course of Administration and Commerce</option>
+                                <option value="23">Supplementary Accounting and Administration</option>
+                                <option value="24">Unknown</option>
+                                <option value="25">Cannot read or write</option>
+                                <option value="26">Can read without having a 4th year of schooling</option>
+                                <option value="27">Basic education 1st cycle (4th/5th year) or equivalent</option>
+                                <option value="28">Basic Education 2nd Cycle (6th/7th/8th Year) or equivalent</option>
+                                <option value="29">Technological specialization course</option>
+                                <option value="30">Higher education—degree (1st cycle)</option>
+                                <option value="31">Specialized higher studies course</option>
+                                <option value="32">Professional higher technical course</option>
+                                <option value="33">Higher Education—master's degree (2nd cycle)</option>
+                                <option value="34">Higher Education—doctorate (3rd cycle)</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="father_qualification">Father's Qualification</label>
+                            <select name="father_qualification" id="father_qualification" required>
+                                <option value="" disabled selected>Please select</option>
+                                <option value="1">Secondary Education—12th Year of Schooling or Equivalent</option>
+                                <option value="2">Higher Education—bachelor's degree</option>
+                                <option value="3">Higher Education—degree</option>
+                                <option value="4">Higher Education—master's degree</option>
+                                <option value="5">Higher Education—doctorate</option>
+                                <option value="6">Frequency of Higher Education</option>
+                                <option value="7">12th Year of Schooling—not completed</option>
+                                <option value="8">11th Year of Schooling—not completed</option>
+                                <option value="9">7th Year (Old)</option>
+                                <option value="10">Other—11th Year of Schooling</option>
+                                <option value="11">2nd year complementary high school course</option>
+                                <option value="12">10th Year of Schooling</option>
+                                <option value="13">General commerce course</option>
+                                <option value="14">Basic Education 3rd Cycle (9th/10th/11th Year) or Equivalent</option>
+                                <option value="15">Complementary High School Course</option>
+                                <option value="16">Technical-professional course</option>
+                                <option value="17">Complementary High School Course—not concluded</option>
+                                <option value="18">7th year of schooling</option>
+                                <option value="19">2nd cycle of the general high school course</option>
+                                <option value="20">9th Year of Schooling—not completed</option>
+                                <option value="21">8th year of schooling</option>
+                                <option value="22">General Course of Administration and Commerce</option>
+                                <option value="23">Supplementary Accounting and Administration</option>
+                                <option value="24">Unknown</option>
+                                <option value="25">Cannot read or write</option>
+                                <option value="26">Can read without having a 4th year of schooling</option>
+                                <option value="27">Basic education 1st cycle (4th/5th year) or equivalent</option>
+                                <option value="28">Basic Education 2nd Cycle (6th/7th/8th Year) or equivalent</option>
+                                <option value="29">Technological specialization course</option>
+                                <option value="30">Higher education—degree (1st cycle)</option>
+                                <option value="31">Specialized higher studies course</option>
+                                <option value="32">Professional higher technical course</option>
+                                <option value="33">Higher Education—master's degree (2nd cycle)</option>
+                                <option value="34">Higher Education—doctorate (3rd cycle)</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="father_occupation">Father's Occupation</label>
+                            <select name="father_occupation" id="father_occupation" required>
+                                <option value="" disabled selected>Please select</option>
+                                <option value="1">Student</option>
+                                <option value="2">Representatives of the Legislative Power and Executive Bodies</option>
+                                <option value="3">Specialists in Intellectual and Scientific Activities</option>
+                                <option value="4">Intermediate Level Technicians and Professions</option>
+                                <option value="5">Administrative staff</option>
+                                <option value="6">Personal Services, Security and Safety Workers</option>
+                                <option value="7">Farmers and Skilled Workers in Agriculture</option>
+                                <option value="8">Skilled Workers in Industry, Construction, and Craftsmen</option>
+                                <option value="9">Installation and Machine Operators</option>
+                                <option value="10">Unskilled Workers</option>
+                                <option value="11">Armed Forces Professions</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="displaced">Displaced</label>
+                            <select name="displaced" id="displaced" required>
+                                <option value="" disabled selected>Please select</option>
+                                <option value="0">No</option>
+                                <option value="1">Yes</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="debtor">Debtor</label>
+                            <select name="debtor" id="debtor" required>
+                                <option value="" disabled selected>Please select</option>
+                                <option value="0">No</option>
+                                <option value="1">Yes</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="tuition_fees">Tuition Fees Up to Date</label>
+                            <select name="tuition_fees" id="tuition_fees" required>
+                                <option value="" disabled selected>Please select</option>
+                                <option value="0">No</option>
+                                <option value="1">Yes</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="gender">Gender</label>
+                            <select name="gender" id="gender" required>
+                                <option value="" disabled selected>Please select</option>
+                                <option value="0">Male</option>
+                                <option value="1">Female</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="scholarship">Scholarship Holder</label>
+                            <select name="scholarship" id="scholarship" required>
+                                <option value="" disabled selected>Please select</option>
+                                <option value="0">No</option>
+                                <option value="1">Yes</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="age_at_enrollment">Age at Enrollment</label>
+                            <input type="number" name="age_at_enrollment" id="age_at_enrollment" min="16" max="60" required placeholder="Enter age">
+                        </div>
+                    </div>
+
+                    <div class="submit-section">
+                        <button type="submit" class="submit-btn" onclick="submitForm()">
+                            <span>Predict Dropout Risk</span>
+                            <i class="btn-icon">🔮</i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="info-section">
+            <div class="info-card">
+                <div class="card-icon">🎯</div>
+                <h3>Accurate Predictions</h3>
+                <p>Our machine learning model analyzes multiple factors to provide reliable dropout risk assessments.</p>
+            </div>
+            
+            <div class="info-card">
+                <div class="card-icon">📊</div>
+                <h3>Data-Driven Insights</h3>
+                <p>Get comprehensive analytics and insights to help improve student retention strategies.</p>
+            </div>
+            
+            <div class="info-card">
+                <div class="card-icon">🎓</div>
+                <h3>Educational Support</h3>
+                <p>Identify at-risk students early and provide targeted intervention programs.</p>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2024 Student Dropout Prediction System. Powered by Machine Learning.</p>
+        </div>
+    </footer>
+
+    <script>
+        function submitForm() {
+            document.form.submit();
+        }
+
+        // Mobile menu toggle
+        const hamburger = document.querySelector('.hamburger');
+        const navMenu = document.querySelector('.nav-menu');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+
+        // Form validation and interaction
+        const formGroups = document.querySelectorAll('.form-group');
+        formGroups.forEach(group => {
+            const input = group.querySelector('input, select');
+            if (input) {
+                input.addEventListener('focus', () => {
+                    group.classList.add('focused');
+                });
+                
+                input.addEventListener('blur', () => {
+                    if (!input.value) {
+                        group.classList.remove('focused');
+                    }
+                });
+                
+                input.addEventListener('change', () => {
+                    if (input.value) {
+                        group.classList.add('filled');
+                    } else {
+                        group.classList.remove('filled');
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
